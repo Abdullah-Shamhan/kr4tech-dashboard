@@ -1,0 +1,68 @@
+<div  style="padding: 20px;">
+
+    <div class="row justify-content-between" style="border-bottom: 1px solid white;">
+        <h1 style="font-size: 60px; color: #fff;">SLIDERS</h1>
+        <div  *ngIf="isEditing">
+          <button  class="btn app-btn" style="margin: 30px 40px;" (click)="onCancel()" [disabled]="isLoading" >CANCEL</button>
+          <button  class="btn app-btn" style="margin: 30px 40px;" (click)="onSave()" [disabled]="!srvsContentValidity || !srvsNameValidity" >SAVE </button>
+        </div>
+    </div>
+
+    <div class="row justify-content-center align-content-center" style="margin-top: 15%;" *ngIf="isLoading" >
+      <app-loading-spinner></app-loading-spinner>
+      </div>
+
+      <div *ngIf="!isEditing">
+      <div style="display: flex;  margin: 40px 0 10px 0; padding-left: 100px;" *ngIf="!isLoading" >
+        <div class="col-4" >
+          <div class=" flex-row ">
+            <label >Sort by</label>
+            <select  class="custom-select" style="width: 50%; margin-left: 20px !important;"  (change)="onSort($event.target.value)">
+              <option value="name">Slider name</option>
+              <option value="date" selected>Date added</option>
+            </select>
+          </div>
+      
+        </div>
+  
+  
+      </div>
+
+      <div>
+        <div style="display: flex; flex-direction: row; margin: 10px 0; justify-content: center;" *ngIf="!isLoading" >
+            <div class="col-10 "  >
+                <table class="table " style="background-color: azure; ">
+                    <thead style="background-color: #0d9bcf3f">
+                      <tr>
+                        <th class="text-center" scope="col">Slider name</th>
+                        <th class="text-center" scope="col">Num of slides</th>
+                        <th class="text-center" scope="col">Date Added</th>
+                        <th class="text-center" scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  *ngFor="let slider of slidersList ; let i = index"  >
+                        <td class="text-center">{{slider.name}}</td>
+                        <td class="text-center">{{slider.content.length}}</td>
+                        <td class="text-center">{{slider.dateAdded}}</td>
+                        <td class="float-right"> <a  (click)="onEdit(slider)" style="color: #1ba9dd;">Edit</a> <a (click)="onAddtoApp(slider)" style="color: #1ba9dd; margin-left:20px;">Add to app</a> <a (click)="onDelete(slider.id)"   style="margin-left:20px; color: rgb(190, 28, 28);">Delete</a></td>
+                      </tr>
+        
+                    </tbody>
+                  </table>
+        
+          </div>
+          </div>
+        
+          
+        
+        
+        </div>
+      </div>
+
+      <div *ngIf="isEditing && !isLoading">
+        <app-edit-slider [slider]="editedSlider"  ></app-edit-slider>
+      </div>
+</div>
+
+

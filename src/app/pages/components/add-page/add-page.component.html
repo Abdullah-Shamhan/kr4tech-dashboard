@@ -1,0 +1,27 @@
+<div  style="padding: 20px;">
+
+  <div>
+    <div class="row justify-content-between" style="border-bottom: 1px solid white; ">
+        <h1 style="font-size: 60px; color: #fff;">ADD PAGE {{header}}</h1>
+        <button  *ngIf="!isLoading"  class="btn app-btn" style="margin: 30px 40px;" [disabled]="buttonIsEnabled || isUploading" (click)="onPress()">{{buttonTitle}} </button>
+
+    </div>
+
+    <div class="row " style="padding-top: 30px;" *ngIf="!isLoading">
+       <div class="col-12">
+         <router-outlet></router-outlet>
+       </div>
+
+    </div>
+  </div>
+
+
+
+    <div class="row justify-content-center align-content-center" style="margin-top: 20%;" *ngIf="isLoading" >
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+</div>
+
+
+

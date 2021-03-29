@@ -1,0 +1,100 @@
+<div  style="padding: 20px;">
+
+    <div class="row justify-content-between" style="border-bottom: 1px solid white;">
+        <h1 style="font-size: 60px; color: #fff;">NOTIFICATIONS</h1>
+       
+          <button *ngIf="mode !== 'Popup'"  class="btn app-btn" style="margin: 30px 40px;" [disabled]="notificationForm.invalid || isLoading" (click)="onNotification()" > SEND </button>
+          <button *ngIf="mode=== 'Popup'"  class="btn app-btn" style="margin: 30px 40px;" [disabled]="image === null" (click)="onPopup()" > SEND </button>
+
+    </div>
+
+    <div class="row justify-content-center align-content-center" style="margin-top: 20%;" *ngIf="isLoading" >
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+
+     
+
+      <div class="row justify-content-center align-content-center " style="margin-top: 3%;" *ngIf="!isLoading"  >
+        <div class="col-7 " style="display: flex; justify-content: space-around;">
+
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" [checked]="mode === 'English'" id="English" name="inputType"  (change)="modeChanged($event.target.id)">
+            <label class="custom-control-label"  for="English">English</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" [checked]="mode === 'Arabic'" id="Arabic" name="inputType"  (change)="modeChanged($event.target.id)">
+            <label class="custom-control-label"  for="Arabic">Arabic</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" [checked]="mode === 'Popup'" id="Popup" name="inputType"   (change)="modeChanged($event.target.id)">
+            <label class="custom-control-label" for="Popup">Popup</label>
+          </div>
+
+        </div>
+
+      </div>
+
+    <form class="row justify-content-center " style="margin-top: 3%;"  [formGroup]="notificationForm" *ngIf="!isLoading && mode !== 'Popup'" >
+
+        <div class="col-6  ">
+    
+        <div style="display: flex; flex-direction: row; ">
+            <div class=" col-12 form-group">
+                <label for="title">Notification title</label>
+                <input type="text" class="form-control" id="enTitle" formControlName="title">
+              </div>
+        </div>
+      
+      
+        <div style="display: flex; flex-direction: row; ">
+            <div class=" col-12 form-group">
+                <label for="enDescription">Body</label>
+                <textarea type="text" class="form-control" style="height: 150px;" id="enDescription" formControlName="description"></textarea>
+              </div>
+    
+        </div>
+    
+    
+    
+    </div>
+    
+      
+      
+      </form>
+
+<div *ngIf="!isLoading && mode === 'Popup'" >
+      <div style="display: flex; flex-direction: row; margin-top: 3%; justify-content: space-around;"  >
+        <div class="col-6 " >
+          <label for="importFile" >Select popup image</label>
+          <div class="custom-file">
+              <input type="file" class="custom-file-input" id="importFile" accept="image/png ,image/jpeg" (change)="onFileChange($event.target.files)" >
+              <label class="custom-file-label" for="customFile" #labelImport for="importFile" style="color: black; font-size: 17px;">{{fileName}}</label>
+            </div>
+         
+      </div>
+    </div>
+
+    <div class="row justify-content-center" style=" margin-top: 3%; justify-content:center;" *ngIf="currentPopup !== null ">
+      <div class="col-6 " style="display: flex; flex-direction: column; justify-content: center;">
+        
+        <div class="align-self-center">
+          <div style="display: flex; justify-content: space-between;">
+            <label  >Current popup</label>
+            <a (click)="removePopup()" style="color: red;" >REMOVE?</a>
+          </div>
+          <img alt="Update if image not showing!" [src]="currentPopup" style="width: 300px; height: 300px; border: 1px solid #000;"   />
+        </div>
+      </div>
+
+      
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+
+

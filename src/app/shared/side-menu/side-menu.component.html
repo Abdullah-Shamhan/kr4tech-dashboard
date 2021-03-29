@@ -1,0 +1,20 @@
+<div class="justify-content-center " style="border-right: 2px solid #0dace6; height: 100%; width: 250px;  padding: 35px  35px; background-color: white;  ">
+    <div class="row justify-content-center" style="margin-bottom: 10px;">
+        <img src="../../../assets/logo3X.png" class="align-self-center " style="height: 90px;" />
+    </div>
+    <div class="row" >
+        <ul style="width: 100%; padding: 10px 0px; list-style: none;" >
+            <h3  class="text-center" >PAGES</h3>
+            <li><a [routerLink]="'pages'" class="normal" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" [class.disabled]="isLoading ? true : null"  >PAGES</a></li>
+            <li><a [routerLink]="'pages/add-page'" class="normal" routerLinkActive="active">ADD PAGE</a></li>
+            <li><a [routerLink]="'article'" class="normal" routerLinkActive="active">ARTICLES</a></li>
+            <h3 class="text-center" style="margin-top: 15px;"  >SLIDERS</h3>
+            <li  ><a [routerLink]="'sliders'" class="normal" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >SLIDERS</a></li>
+            <li><a [routerLink]="'sliders/add-slider'" class="normal" routerLinkActive="active">ADD SLIDER</a></li>
+            <h3 class="text-center" style="margin-top: 15px;" >APP</h3>         
+            <li><a [routerLink]="'app-content'" class="normal" routerLinkActive="active">APP CONTENT</a></li>
+            <li><a [routerLink]="'notification'" class="normal" routerLinkActive="active">NOTIFICATIONS</a></li>
+            <li><a [routerLink]="'settings'" class="normal" routerLinkActive="active">SETTINGS</a></li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+<div  style="padding: 20px;">
+
+    <div class="row justify-content-between" style="border-bottom: 1px solid white; ">
+        <h1 style="font-size: 60px; color: #fff;">ARTICLES</h1>
+        <div>
+            <button  class="btn app-btn" style="margin: 30px 30px;"  (click)="onReset()"  *ngIf="!isLoading " >RESET</button>
+            <button  class="btn app-btn" style="margin: 30px 40px;" [disabled]="articleForm.invalid || (htmlAR === ''  && mode === 'article' || isLoading ) " (click)="onSubmit()"   >{{mode === 'article' ? 'SAVE': 'NEXT'}}</button>
+        </div>
+
+    </div>
+
+    <div class="row justify-content-center align-content-center" style="margin-top: 20%;" *ngIf="isLoading" > 
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+
+</div>
+
+
+  <div *ngIf="!isLoading">
+  
+  <div  *ngIf="mode === 'article'  " style="padding-bottom: 40px;" >
+   
+    <div class="row justify-content-center align-content-center " style="margin: 2% 0; max-width: 1200px;" *ngIf="!isLoading"  >
+      <div class="col-6 " style="display: flex; justify-content: space-around;">
+
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" class="custom-control-input" [checked]="language== 'EN'" id="EN" name="lang"  (change)="languageChanged($event.target.id)">
+          <label class="custom-control-label"  for="EN">English</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" class="custom-control-input" [checked]="language === 'AR'" id="AR" name="lang"   (change)="languageChanged($event.target.id)">
+          <label class="custom-control-label" for="AR">Arabic</label>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div style="display: flex; justify-content: space-around;" *ngIf="language === 'EN'"  >
+
+      <div id="quill" style="background-color: white; width: 65%;  ">
+          <quill-editor [styles]="editorStyle" placeholder="Enter Text"  [(ngModel)]= "htmlEN" [modules]="{syntax:true}"
+               required>
+          </quill-editor>
+      </div>
+
+  <div class="  ql-container ql-snow"  style=" width: 26%; height: 550px; background-color: rgb(247, 247, 247); border: 1px solid #000; ">
+    <ion-content>
+        <div class="ql-editor " style="padding: 15px; " [innerHTML]="htmlEN| safe: 'html'"></div>
+    </ion-content>
+</div>
+
+
+
+
+</div> 
+
+<div style="display: flex; justify-content: space-around;" *ngIf="language === 'AR'"  >
+
+  <div id="quill" style="background-color: white; width: 65%;  ">
+      <quill-editor [styles]="editorStyle" placeholder="Enter Text"  [(ngModel)]= "htmlAR" [modules]="{syntax:true}"
+           required>
+      </quill-editor>
+  </div>
+
+<div class="  ql-container ql-snow"  style=" width: 26%; height: 550px; background-color: rgb(247, 247, 247); border: 1px solid #000; ">
+<ion-content>
+    <div class="ql-editor " style="padding: 15px; " [innerHTML]="htmlAR| safe: 'html'"></div>
+</ion-content>
+</div>
+
+
+
+
+</div> 
+
+
+  </div>
+
+
+
+
+
+ <form class="col-12 "  [formGroup]="articleForm" *ngIf="mode === 'details' || mode ==='editing'" >
+  <h2 style="text-align: center; color: white;">{{ mode === 'editing' ? 'EDIT ARTICLE' :  'NEW ARTICLE'}}</h2>
+    <div style="display: flex; flex-direction: row; justify-content: space-around;">
+        <div class=" col-4 form-group">
+            <label for="enTitle">English title</label>
+            <input type="text" class="form-control" id="enTitle" formControlName="enTitle">
+          </div>
+          <div class="col-4 form-group">
+            <label for="arTitle">Arabic title</label>
+            <input type="text" class="form-control" id="arTitle" style="text-align: right;" formControlName="arTitle">
+          </div>
+    </div>
+  
+  
+    <div style="display: flex; flex-direction: row; justify-content: space-around;">
+        <div class=" col-4 form-group">
+            <label for="enDescription">English description</label>
+            <input type="text" class="form-control" id="enDescription" formControlName="enDescription">
+          </div>
+          <div class="col-4 form-group">
+            <label for="arDiscription" >Arabic description</label>
+            <input type="text" class="form-control" id="arDiscription" style="text-align: right;" formControlName="arDescription">
+          </div>
+    </div>
+  
+    <div *ngIf="mode !== 'editing' ">
+    <hr color="white" />
+
+    <div class="row justify-content-center" style=" margin: 10px 0; justify-content: center;">
+      <h2 style="color: white;">AVAILABLE ARTICLES</h2>
+      <div class="col-11 "  >
+  
+          <table class="table " style="background-color: azure; ">
+              <thead style="background-color: #0d9bcf3f">
+                <tr>
+                  <th class="text-center" scope="col">Title</th>
+                  <th class="text-center" scope="col">Description</th>
+                  <th class="text-center" scope="col">Date added</th>
+                  <th class="text-center" scope="col">VIEW</th>
+                  <th class="text-center" scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of articlesList; let i = index"  >
+                  <td class="text-center">{{item.enTitle}}</td>
+                  <td class="text-center">{{item.enDescription}}</td>
+                  <td class="text-center">{{item.dateAdded}}</td>
+                  <td class="text-center"   > <a  style="color: #1ba9dd;" (click)="onView(item.htmlContentAR);" >Arabic</a> <a  style="color: #1ba9dd; margin-left: 17px;" (click)="onView(item.htmlContentEN);" >English</a></td>
+                  <td class="float-right"   > <a (click)="onGenerate(item);"  style="color: #1ba9dd; margin-left: 17px;">Generate</a> <a (click)="onEdit(item);"  style="color: #1ba9dd; margin-left: 17px;">Edit</a> <a (click)="onDelete(item.id);"  style="color: red; margin-left: 17px;">Delete</a></td>
+                </tr>
+  
+              </tbody>
+            </table>
+  
+    </div>
+    </div>
+  </div>
+    
+  </form> 
+
+
+</div>
+

@@ -1,0 +1,15 @@
+{
+  "targets": {
+    "kr-app-49b1f": {
+      "hosting": {
+        "KR-ADMIN-PANEL": [
+          "kr-app-49b1f"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "kr-app-49b1f",
+    "pusblishing": "kr-app-49b1f"
+  }
+}

@@ -1,0 +1,71 @@
+
+<form class="col-12 "  [formGroup]="catalogueForm" (ngSubmit)="onSubmit()">
+
+  <div style="display: flex; flex-direction: row; justify-content: space-around;">
+      <div class=" col-5 form-group">
+          <label for="enTitle">English title</label>
+          <input type="text" class="form-control" id="enTitle" formControlName="enTitle">
+        </div>
+        <div class="col-5 form-group">
+          <label for="arTitle">Arabic title</label>
+          <input type="text" class="form-control" id="arTitle" style="text-align: right;" formControlName="arTitle">
+        </div>
+  </div>
+
+
+  <div style="display: flex; flex-direction: row; justify-content: space-around;">
+      <div class=" col-5 form-group">
+          <label for="enDescription">English description</label>
+          <input type="text" class="form-control" id="enDescription" formControlName="enDescription">
+        </div>
+        <div class="col-5 form-group">
+          <label for="arDiscription" >Arabic description</label>
+          <input type="text" class="form-control" id="arDiscription" style="text-align: right;" formControlName="arDescription">
+        </div>
+  </div>
+
+
+  <div style="display: flex; flex-direction: row; margin: 20px 0; justify-content: space-around;">
+    <div class="col-5 " >
+      <label >Select image</label>
+      <div class="custom-file">
+          <input type="file" class="custom-file-input" formControlName="importFile" id="importFile" accept="image/png ,image/jpeg" (change)="onFileChange($event.target.files)" >
+          <label class="custom-file-label" for="customFile" #labelImport for="importFile" style="color: black; font-size: 17px; overflow: hidden;">{{fileName}}</label>
+          <span *ngIf="isUploading" >Image is uploading, please wait ...</span>
+      </div>
+  </div>
+  <div class="col-5">
+      <button *ngIf="!editItem" type="submit" class="btn app-btn" style="margin-top: 25px; float: right; width: 140px;" [disabled]="catalogueForm.invalid || isUploading"> Add </button>
+      <button *ngIf="editItem" type="submit" class="btn app-btn" style="margin-top: 25px; float: right; width: 140px;" [disabled]="catalogueForm.get('arTitle').invalid || catalogueForm.get('enTitle').invalid || catalogueForm.get('arDescription').invalid || catalogueForm.get('enDescription').invalid || isUploading"> SAVE </button>
+      <button type="button" (click)="onRset()" class="btn app-btn" style="margin-top: 25px;  width: 140px;" [disabled]="isUploading" >{{editItem ? 'CANCEL' : 'RESET'}}</button>
+  </div>
+
+  </div>
+
+  <div style="display: flex; flex-direction: row; margin: 30px 0; justify-content: center;" *ngIf="catalogueContent.length > 0">
+      <div class="col-10 "  >
+
+          <table class="table " style="background-color: azure; ">
+              <thead style="background-color: #0d9bcf3f">
+                <tr>
+                  <th class="text-center" scope="col">Title</th>
+                  <th class="text-center" scope="col">Description</th>
+                  <th class="text-center" scope="col">Image link</th>
+                  <th class="text-center" scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  *ngFor="let item of catalogueContent; let i = index" >
+                  <td class="text-center">{{item.enTitle}}</td>
+                  <td class="text-center">{{item.enDescription}}</td>
+                  <td class="text-center"><a  [href]="item.image"  target="_blank" style=" color: #1ba9dd;">View</a></td>
+                  <td class="float-right"> <a  (click)="onEditItem(i)" style="margin-left:17px; color: #1ba9dd;">Edit</a> <a  (click)="onRemoveItem(i)" style="margin-left:30px; color: rgb(190, 28, 28);">Delete</a></td>
+                </tr>
+
+              </tbody>
+            </table>
+
+    </div>
+    </div>
+
+</form>

@@ -1,0 +1,119 @@
+<div  style="padding: 20px;" >
+    <h2 style="color: white; text-align: center;">SLIDER DETAILS</h2>
+    <div class=" container"  >
+        <div class="row justify-content-center" style="margin-top: 50px;">
+            <div class="col-6 form-group align-self-center ">
+                <label for="arTitle">Slider name</label>
+                <input type="text" class="form-control" id="text" required [(ngModel)]="sliderName" (ngModelChange)="changeSliderName($event)" >
+              </div>
+        </div>
+      
+      
+        <div style="display: flex; flex-direction: row; margin: 10px 0; justify-content: center;">
+          <div class="col-11 "  >
+      
+              <h2 style="color: white;" class="text-center">Current slides</h2>
+              <table class="table " style="background-color: azure; ">
+                  <thead style="background-color: #0d9bcf3f">
+                    <tr>
+                      <th class="text-center" scope="col">Title</th>
+                      <th class="text-center" scope="col">Page title</th>
+                      <th class="text-center" scope="col">Page type</th>
+                      <th class="text-center" scope="col">Image</th>
+                      <th class="text-center" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr  *ngFor="let slide of sliderContent; let i = index"  >
+                      <td class="text-center">{{slide.slideName}}</td>
+                      <td class="text-center">{{slide.navTo.enTitle}}</td>
+                      <td class="text-center">{{slide.navTo.pageType}}</td>
+                      <td class="text-center"><a  [href]="slide.image"  target="_blank" style=" color: rgb(48, 78, 175);">View</a></td>
+                      <td><a (click)="onRemove(i)"   style="float: right; color: rgb(190, 28, 28);">Delete</a></td>
+                    </tr>
+      
+                  </tbody>
+                </table>
+      
+        </div>
+        </div>
+      
+      </div>
+
+      <hr color="white">
+      <h2 style="color: white; text-align: center; margin: 15px 0;">ADD SLIDES</h2>
+    <div>
+        <form class="col-12 "  [formGroup]="sliderForm" >
+        
+            <div style="display: flex; flex-direction: row; justify-content: space-around;">
+                <div class=" col-5 form-group">
+                    <label for="slideName">Image name (EN)</label>
+                    <input type="text" class="form-control" id="slideName" formControlName="slideName">
+                  </div>
+                  <div class="col-5 form-group">
+                    <label >Select images</label>
+                    <div class="custom-file">
+                      <input  type="file" class="custom-file-input" formControlName="importFile" id="importFile" accept="image/png ,image/jpeg" (change)="onFileChange($event.target.files)" >
+                      <label class="custom-file-label" for="customFile" #labelImport for="importFile" style="color: black; font-size: 17px; overflow: hidden;">{{fileName}}</label>
+                    </div>
+                    <span *ngIf="isUploading" >Image is uploading , please wait ..</span>
+                  </div>
+            </div>
+         
+            <div style="display: flex; flex-direction: row; margin: 20px 0; justify-content: space-around;">
+              <div class="col-5 " >
+
+            </div>
+            <div class="col-5">
+                <button type="submit" class="btn app-btn" style="margin-top: 25px; float: right; width: 140px;" [disabled]="sliderForm.invalid || isUploading" (click)="onSubmit()" > Add </button>
+                <button type="button" (click)="onRset()" class="btn app-btn" style="margin-top: 25px;  width: 140px;" [disabled]="isUploading" > REST </button>
+            </div>
+        
+            </div>
+        
+              <div style="display: flex; flex-direction: row; margin: 10px 0; justify-content: center;">
+                <div class="col-11 "  >
+        
+                    <h2 style="color: white;" class="text-center">Navigate to</h2>
+                    <table class="table table-hover" style="background-color: azure; ">
+                        <thead style="background-color: #0d9bcf3f">
+                          <tr>
+                            <th class="text-center" scope="col">Select</th>
+                            <th class="text-center" scope="col">Title</th>
+                            <th class="text-center" scope="col">Description</th>
+                            <th class="text-center" scope="col">Page type</th>
+                            <th class="text-center" scope="col">Date added</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr  *ngFor="let page of pagesList; let i = index" (click)="onRowClick(i)"  >
+                            <td class="text-center"> <input type="radio" [disabled]="isUploading"  [checked]="page.id === currentPageId"  [id]="page.id" name="navTo" value="page"    >&nbsp;</td>
+                            <td class="text-center">{{page.enTitle}}</td>
+                            <td class="text-center">{{page.enDescription}}</td>
+                            <td class="text-center">{{page.pageType}}</td>
+                            <td class="text-center">{{page.dateAdded}}</td>
+                          </tr>
+        
+                        </tbody>
+                      </table>
+        
+              </div>
+              </div>
+        
+        </form>
+        
+
+        
+        </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+

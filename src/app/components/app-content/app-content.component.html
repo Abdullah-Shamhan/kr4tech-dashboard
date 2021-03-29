@@ -1,0 +1,65 @@
+<div  style="padding: 20px;">
+
+    <div class="row justify-content-between" style="border-bottom: 1px solid white;">
+        <h1 style="font-size: 60px; color: #fff;">APP CONTENT</h1>
+        <div>
+          <button  class="btn app-btn" style="margin: 30px 40px;"  [disabled]="isLoading" (click)="updateAll()"  >UPDATE  ALL</button>
+          <button  class="btn app-btn" style="margin: 30px 40px;" [disabled]="isLoading" (click)="onSave()" >SAVE & DEPLOY</button>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center align-content-center" style="margin-top: 20%;" *ngIf="isLoading" >
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+</div>
+
+
+<div class="col-12  row justify-content-between" style="margin-bottom: 40px;" *ngIf="!isLoading">
+    <div class="col-8" style="display: flex; flex: 1; ">
+        <table class="table " style="background-color: azure; ">
+            <thead style="background-color: #0d9bcf3f">
+              <tr>
+                <th class="text-center" scope="col">Title</th>
+                <th class="text-center" scope="col">Type</th>
+                <th class="text-center" scope="col">Cost</th>
+                <th class="text-center" scope="col">Date Added</th>
+                <th class="text-center" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let page of items ; let i = index"  >
+                <td class="text-center">{{page.enTitle? page.enTitle : page.name }}</td>
+                <td class="text-center">{{page.pageType? page.pageType : "Slider" }}</td>
+                <td class="text-center">{{page.isFree ? page.isFree : "-" }}</td>
+                <td class="text-center">{{page.dateAdded ? page.dateAdded : "-"}}</td>
+                <td class="float-right"> <a [ngStyle]=" {'display': (page.pageType === 'whatsapp') || (page.pageType === 'instagram') ? 'none' : 'inline' }"  (click)="onRemove(page.id)"  style="margin-left:30px; color: rgb(190, 28, 28);">Delete</a></td>
+              </tr>
+
+            </tbody>
+          </table>
+    </div>
+
+    <div class="col-4 dragDropmCol"  >
+
+        <div  class="example-container justify-content-between align-content-start" cdkDropListGroup   >
+            <div cdkDropList style="display: none;" [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped()"></div>
+            <div cdkDropList *ngFor="let item of items ; let i = index" 
+           
+                 [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped()"  >
+              <div cdkDrag class="example-box" (cdkDragMoved)="dragMoved($event);" style="font-size: 14px;" [ngStyle]="stylingBoxes(item)" [id]="item.id">
+                <div class="flex-column"  >
+                  <img *ngIf="item.buttonType === 'icon'" [src]="item.imageUrl" style="width: 45px;  height: 45px; margin-bottom: 4px;" />
+                  <div style="color: white; ;" [ngStyle]="{'background-color': item.buttonType === 'image' ? 'rgba(0, 0, 0, 0.288)' :'transparent' }" >
+                   <!-- <span  *ngIf="item.name" style="font-size: 12px;" > Slider <br> </span> -->
+                    {{item.enTitle? item.enTitle : ''  }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+    </div>
+
+</div>
+

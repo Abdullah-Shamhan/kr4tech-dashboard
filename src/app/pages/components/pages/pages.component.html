@@ -1,0 +1,91 @@
+<div  style="padding: 20px;" >
+
+    <div class="row justify-content-between" style="border-bottom: 1px solid white;">
+        <h1 style="font-size: 60px; color: #fff;">PAGES</h1>
+
+        <div  *ngIf="editPage">
+          <button  class="btn app-btn" style="margin: 30px 40px;"  [disabled]="isLoading" (click)="onCancel()" >CANCEL</button>
+          <button  class="btn app-btn" style="margin: 30px 40px;" [disabled]=" !pageIsValid || !contentIsValid ||  isLoading" (click)="onSave()" >SAVE / UPDATE</button>
+        </div>
+
+    </div>
+    <div *ngIf="!isLoading && !isEditing" >
+
+      <div style="display: flex;  margin: 40px 0 10px 0; justify-content: center;"  >
+        <div class="col-4" >
+          <div class=" flex-row ">
+            <label >Sort by</label>
+            <select  class="custom-select" style="width: 50%; margin-left: 20px !important;"  (change)="onSort($event.target.value)">
+              <option value="title">Title</option>
+              <option value="page">Page type</option>
+              <option value="date" selected>Date added</option>
+              <option value="cost">Cost</option>
+            </select>
+          </div>
+      
+        </div>
+  
+        <div class="col-4">
+          
+          <div class=" flex-row ">
+            <label >Filter</label>
+            <select  class="custom-select" style="width: 50%; margin-left: 20px !important;"  (change)="onFilter($event.target.value)">
+            <option value="all" selected >All</option>
+            <option value="article">Article</option>
+            <option value="form">Form</option>
+            <option value="catalogue">Catalogue</option>
+            <option value="gallery">Gallery</option>
+            <option value="blog">Blog</option>
+            <option value="link">Link</option>
+          </select>
+        </div>
+      </div>
+  
+      </div>
+  
+  
+      <div style="display: flex;  margin: 10px 0; justify-content: center;" *ngIf="!isLoading" >
+          
+  
+          <div class="col-10 "  >
+              <table class="table " style="background-color: azure; ">
+                  <thead style="background-color: #0d9bcf3f">
+                    <tr>
+                      <th class="text-center" scope="col">Title</th>
+                      <th class="text-center" scope="col">Type</th>
+                      <th class="text-center" scope="col">Cost</th>
+                      <th class="text-center" scope="col">Date Added</th>
+                      <th class="text-center" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr  *ngFor="let page of pages ; let i = index"  >
+                      <td class="text-center">{{page.enTitle}}</td>
+                      <td class="text-center">{{page.pageType}}</td>
+                      <td class="text-center">{{page.isFree}}</td>
+                      <td class="text-center">{{page.dateAdded}}</td>
+                      <td class="float-right"> <a  (click)="onEdit(page)" style="color: #1ba9dd;">Edit</a> <a  (click)="onAddtoApp(page)" style=" margin-left:20px; color: #1ba9dd;">Add to app</a> <a (click)="onDelete(page.id)"  style="margin-left:20px; color: rgb(190, 28, 28);">Delete</a></td>
+                    </tr>
+  
+                  </tbody>
+                </table>
+  
+        </div>
+        </div>
+
+    </div >
+   
+
+      <div *ngIf="isEditing && !isLoading" style="margin-top: 30px;">
+        <app-edit-page  [page]="editPage" ></app-edit-page >
+
+      </div>
+
+      <div class="row justify-content-center align-content-center" style="margin-top: 15%;" *ngIf="isLoading" >
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+
+</div>
+
+
+

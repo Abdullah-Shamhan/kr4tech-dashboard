@@ -1,0 +1,150 @@
+<form class="col-12 " [formGroup]="fromContent" (ngSubmit)="onAdd()" >
+    <div style="display: flex; justify-content: space-around;">
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" [checked]="inputType === 'textInput'" id="textInput" name="inputType" [disabled]="editItem" (change)="onChange($event.target.id)">
+        <label class="custom-control-label" for="textInput">Text input</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" [checked]="inputType === 'textArea'" id="textArea" name="inputType"  [disabled]="editItem" (change)="onChange($event.target.id)">
+        <label class="custom-control-label" for="textArea">Text area</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" [checked]="inputType === 'fileUpload'" id="fileUpload" name="inputType" [disabled]="editItem"  (change)="onChange($event.target.id)">
+        <label class="custom-control-label" for="fileUpload">Upload file</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" [checked]="inputType === 'checkbox'" id="checkbox" name="inputType"  [disabled]="editItem" (change)="onChange($event.target.id)">
+        <label class="custom-control-label" for="checkbox">Checkbox</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" class="custom-control-input" [checked]="inputType === 'radioButtons'" id="radioButtons" name="inputType" [disabled]="editItem" (change)="onChange($event.target.id)">
+        <label class="custom-control-label" for="radioButtons">Radio buttons</label>
+      </div>
+    </div>
+
+
+    <!-- For text input / text area  /upload file -->
+    <div *ngIf="inputType === 'textInput' || inputType === 'textArea' || inputType === 'fileUpload'" >
+
+      <div class="col-12" style="margin-top: 50px;">
+        <div style="display: flex; flex-direction: row; justify-content: space-around;">
+            <div class=" col-5 form-group">
+                <label for="enLabel">English label</label>
+                <input type="text" class="form-control" id="enLabel" formControlName="enLabel">
+
+                <div style="margin-top: 25px; display: flex; justify-content: space-around; " *ngIf="inputType === 'textInput'">
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="keyboardTypeText" checked value="text" name="keyboardType" formControlName="keyboardType">
+                    <label class="custom-control-label" for="keyboardTypeText">Text</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="keyboardTypeNumber" value="number" name="keyboardType"  formControlName="keyboardType">
+                    <label class="custom-control-label" for="keyboardTypeNumber">Number</label>
+                  </div>
+                </div>
+
+                <div style="margin-top: 25px; display: flex; justify-content: space-around; " *ngIf="inputType === 'fileUpload'">
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="media" checked value="media" name="fileType" formControlName="fileType">
+                    <label class="custom-control-label" for="media">Media</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" id="document" value="document" name="fileType"  formControlName="fileType">
+                    <label class="custom-control-label" for="document">Document</label>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-5 form-group">
+                <label for="arLabel">Arabic Label</label>
+                <input type="text" class="form-control" id="arLabel" style="text-align: right;" formControlName="arLabel">
+                <div>
+                  <button (click)="cancelEditItem()" *ngIf="editItem" type="submit" class="btn app-btn" style="margin-top: 25px; width: 140px; float: left;" >CANCEL</button>
+                  <button type="submit" class="btn app-btn" style="margin-top: 25px; float: right;  width: 140px;" [disabled]="fromContent.invalid">SAVE</button>
+                </div>
+             
+              </div>
+        </div>
+    </div>
+
+    
+
+    </div>
+
+
+    <!-- for checkbox -->
+    <div *ngIf="inputType === 'checkbox' || inputType === 'radioButtons'">
+
+      <div class="col-12" style="margin-top: 50px;">
+        <div style="display: flex; flex-direction: row; justify-content: space-around;">
+            <div class=" col-5 form-group">
+                <label for="enLabel">English label</label>
+                <input type="text" class="form-control" id="enLabel" formControlName="enLabel">
+              </div>
+              <div class="col-5 form-group">
+                <label for="arLabel">Arabic Label</label>
+                <input type="text" class="form-control" id="arLabel" style="text-align: right;" formControlName="arLabel">
+
+              </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column;  margin-top: 15px;" formArrayName="options">
+            <div class=" col-11 input-group mb-3 align-self-center" *ngFor="let choice of controls ; let i = index" [formGroupName]="i">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <a style=" font-weight: bold; cursor: pointer; color: 'red'; padding-right: 5px;"  (click)="removeChoice(i)" >X</a>  Choice {{(i + 1)}}</span>
+                </div>
+                <input type="text" class="form-control" placeholder="English"  formControlName="enChoice">
+                <input type="text" class="form-control" placeholder="Arabic" style="text-align: right;" formControlName="arChoice">
+              </div>
+
+              <div class="row justify-content-center"  >
+                  <div class="col-11 ">
+                    <div class="row justify-content-end" style="padding-right: 25px;">
+                    <button  type="button" (click)="cancelEditItem()" *ngIf="editItem" type="submit" class="btn app-btn" style="margin-top: 10px;  margin-right: 20px; width: 140px;" >CANCEL</button>
+                    <button type="button" (click)="onAddChoice()" class="btn app-btn" style="margin-top: 10px;  margin-right: 20px; ">   ADD CHOICE  </button>
+                    <button type="submit" class="btn app-btn" style="margin-top: 10px;  width: 140px; " [disabled]="fromContent.invalid">SAVE</button>
+                  </div>
+                </div>
+              
+  
+
+
+              </div>
+
+        </div>
+
+
+    </div>
+
+
+    </div>
+
+
+
+
+    <div style="display: flex; flex-direction: row; margin: 10px 0; justify-content: center;" *ngIf="formContentList.length > 0">
+        <div class="col-10 "  >
+
+            <table class="table " style="background-color: azure; ">
+                <thead style="background-color: #0d9bcf3f">
+                  <tr>
+                    <th class="text-center" scope="col">Label</th>
+                    <th class="text-center" scope="col">Type</th>
+                    <th class="text-center" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of formContentList ; let i = index" >
+                    <td class="text-center">{{item.enLabel}}</td>
+                    <td class="text-center">{{renderTableType(item)}}</td>
+                    <td class="float-right"> <a  (click)="onEditItem(i)" style="cursor: pointer; margin-right:17px; color: #1ba9dd;">Edit</a> <a  (click)=" removeItem(i)" style="cursor: pointer; margin-right:30px; color: rgb(190, 28, 28);" >Delete</a></td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+      </div>
+      </div>
+  
+
+  </form>

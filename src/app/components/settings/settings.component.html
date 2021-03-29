@@ -1,0 +1,70 @@
+<div  style="padding: 20px;">
+
+    <div class="row justify-content-between" style="border-bottom: 1px solid white;">
+        <h1 style="font-size: 60px; color: #fff;">SETTINGS</h1>
+        <button  (click)="onSave()" class="btn app-btn" style="margin: 30px 40px;" [disabled]="isLoading"  > SAVE</button>
+    </div>
+
+    <div class="row justify-content-center align-content-center" style="margin-top: 20%;" *ngIf="isLoading" >
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+
+
+<div *ngIf="!isLoading"  style="padding-bottom: 40px;">
+    <div style="display: flex; flex-direction: row; margin-top: 3%; justify-content: space-around;"  >
+        <div class="col-4 " >
+          <label for="importFile" >Select header icon</label>
+          <div class="custom-file">
+              <input type="file" class="custom-file-input" id="importFile" accept="image/png ,image/jpeg" (change)="onFileChange($event.target.files)" >
+              <label class="custom-file-label" for="customFile" #labelImport for="importFile" style="color: black; font-size: 17px;">{{fileName}}</label>
+            </div>
+         
+      </div>
+
+      <div class="col-4 " >
+        <label for="buttonColor" >Primary</label>
+        <input [(colorPicker)]="primary" [(value)]="primary" [cpPosition]="'top-left'" [style.background]="primary"
+         class="form-control" readonly="readonly" style="cursor: default;" id="Primary"  />
+     
+  </div>
+    </div>
+
+    <div style="display: flex; flex-direction: row; margin-top: 3%; justify-content: space-around;"  >
+
+      <div class="col-4 " >
+        <label for="Instagram" >Instagram link</label>
+        <input type="text" class="form-control" id="instagram" [(ngModel)]="instaLink" >
+     
+  </div>
+
+  <div class="col-4 " >
+    <label for="buttonColor" >Secondary</label>
+    <input [(colorPicker)]="secondary" [(value)]="secondary" [cpPosition]="'top-left'" [style.background]="secondary" 
+     class="form-control" readonly="readonly" style="cursor: default;" id="Secondary"  />
+ 
+</div>
+    </div>
+
+
+
+    <div style="display: flex; flex-direction: row; margin-top: 3%; justify-content: space-around;"  >
+      <div class="col-4 " >
+          <label for="Whatsapp" >Whatsapp link</label>
+          <input type="text" class="form-control" id="whatsapp" [(ngModel)]="whatslink" >
+       
+    </div>
+
+    <div class="col-4 " >
+      <label for="buttonColor" >Tertiary</label>
+      <input [(colorPicker)]="tertiary" [(value)]="tertiary" [cpPosition]="'top-left'" [style.background]="tertiary" 
+       class="form-control" readonly="readonly" style="cursor: default;" id="tertiary"   />
+   
+</div>
+
+  </div>
+
+
+
+</div>
+</div>
+

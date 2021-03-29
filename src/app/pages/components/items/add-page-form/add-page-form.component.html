@@ -1,0 +1,107 @@
+<form class="col-12 "  [formGroup]="newPageForm" >
+
+    <div style="display: flex; flex-direction: row; justify-content: space-around;">
+        <div class=" col-4 form-group">
+            <label for="enTitle">English title</label>
+            <input type="text" class="form-control" id="enTitle" formControlName="enTitle" >
+          </div>
+          <div class="col-4 form-group">
+            <label for="arTitle">Arabic title</label>
+            <input type="text" class="form-control" id="arTitle" formControlName="arTitle" style="text-align: right;">
+          </div>
+    </div>
+ 
+
+    <div style="display: flex; flex-direction: row; justify-content: space-around;">
+        <div class=" col-4 form-group">
+            <label for="enDescription">English description</label>
+            <input type="text" class="form-control" id="enDescription" formControlName="enDescription">
+          </div>
+          <div class="col-4 form-group">
+            <label for="arDescription" >Arabic description</label>
+            <input type="text" class="form-control" id="arDescription" style="text-align: right;" formControlName="arDescription">
+          </div>
+    </div>
+ 
+
+    <div style="display: flex; flex-direction: row; justify-content: space-around;">
+        <div class="col-4">
+            <label >Button type</label>
+            <select name="buttonType" class="custom-select" style="width: 100%;" id="buttonType" formControlName="buttonType">
+                <option value="icon">Icon</option>
+                <option value="image">Image</option>
+              </select>
+        </div>
+
+        <div class="col-4">
+            <label >Button size</label>
+            <select name="buttonSize" class="custom-select" style="width: 100%;" id="buttonSize" formControlName="buttonSize">
+                <option value="default" selected hidden>Select size</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </select>
+        </div>
+
+    </div> 
+
+    <div style="display: flex; flex-direction: row; margin: 20px 0; justify-content: space-around;">
+      <div class="col-4 " >
+        <label for="importFile" >Select image or icon</label>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" formControlName="importFile" id="importFile" accept="image/png ,image/jpeg" (change)="onFileChange($event.target.files)" >
+            <label class="custom-file-label" for="customFile" #labelImport for="importFile" style="color: black; font-size: 17px; overflow: hidden;">{{fileName}}</label>
+          </div>
+       
+    </div>
+
+    <div class="col-4">
+      <label for="buttonColor" >Button color</label>
+      <input [(colorPicker)]="color" [(value)]="color" [cpPosition]="'top-left'" [style.background]="color" (colorPickerChange)="onColorChange()"
+       class="form-control" readonly="readonly" style="cursor: default;" id="buttonColor" formControlName="buttonColor"  />
+  </div>
+    </div>
+
+
+
+  <div style="display: flex; flex-direction: row; justify-content: space-around;">
+
+    <div class="col-4">
+        <label for="isFree" >Accessibility</label>
+        <select name="isFree" class="custom-select" style="width: 100%;" id="isFree" formControlName="isFree">
+            <option value="free" selected>Free</option>
+            <option value="paid">Paid</option>
+          </select>
+    </div>
+
+    <div class="col-4">
+      <label for="pageType" >Page type</label>
+      <select name="pageType" class="custom-select" style="width: 100%;" id="pageType"  formControlName="pageType">
+          <option value="default" selected hidden>Select page type</option>
+          <option value="form">Form</option>
+          <option value="gallery">Gallery</option>
+          <option value="catalogue">Catalogue</option>
+          <option value="blog">Blog</option>
+          <option value="article">Article</option>
+          <option value="link">External link</option>
+        </select>
+  </div>
+
+    
+</div> 
+
+<div style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 25px;">
+
+  <div class=" col-10 input-group mb-3 align-self-center" [ngStyle]="{'visibility': productIdVisiblity}">
+    <div class="input-group-prepend">
+      <span class="input-group-text"> ProductId</span>
+    </div>
+    <input type="text" class="form-control" placeholder="IOS"  formControlName="productCodeIOS">
+    <input type="text" class="form-control" placeholder="ANDROID" formControlName="productCodeANDROID">
+  </div>
+
+
+  
+</div> 
+
+</form>
